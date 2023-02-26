@@ -6,8 +6,16 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 library(tidyverse)
 library(janitor)
 
-#### USER DEFINED VARIABLES ###
+#### USER DEFINED VARIABLES ####
 infile = "../Logs/LOG-01-IDE00021_&11.CSV"
+
+#### VARIABLES CREATED FROM UDV ####
+outfile = str_c("output/",
+                infile %>%
+                  str_remove("\\.CSV$") %>%
+                  str_remove_all("^.*\\/"),
+                ".png",
+                sep = "")
 
 #### READ IN DATA ####
 # make header row
@@ -78,9 +86,4 @@ data_vcds %>%
   # scale_size(range = c(1,6)) +
   facet_grid(cylinder ~ .)
 
-ggsave(str_c("output/",
-             infile %>%
-               str_remove("\\.CSV$") %>%
-               str_remove_all("^.*\\/"),
-             ".png",
-             sep = ""))
+ggsave(outfile)
