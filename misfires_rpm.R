@@ -79,6 +79,8 @@ data_vcds %>%
   facet_grid(cylinder ~ .)
 
 ggsave(str_c("output/",
-             str_remove(infile,
-                        "\\.CSV$"),
-             ".png"))
+             infile %>%
+               str_remove("\\.CSV$") %>%
+               str_remove_all("^.*\\/"),
+             ".png",
+             sep = ""))
