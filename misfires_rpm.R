@@ -7,12 +7,12 @@ library(tidyverse)
 library(janitor)
 
 #### USER DEFINED VARIABLES ###
-infile = "LOG-01-IDE00021_&11.CSV"
+infile = "../Logs/LOG-01-IDE00021_&11.CSV"
 
 #### READ IN DATA ####
 # make header row
 header_row <- 
-  read_csv("LOG-01-IDE00021_&11.CSV",
+  read_csv(infile,
            skip = 2,
            col_names = FALSE,
            n_max = 4) %>%
@@ -31,7 +31,7 @@ header_row <-
 
 # Read in the data from the text file
 data <- 
-  read_csv("LOG-01-IDE00021_&11.CSV",
+  read_csv(infile,
            skip = 6) %>%
   select(-...1,
          -...26)
@@ -77,3 +77,8 @@ data_vcds %>%
               height = .5) +
   # scale_size(range = c(1,6)) +
   facet_grid(cylinder ~ .)
+
+ggsave(str_c("output/",
+             str_remove(infile,
+                        "\\.CSV$"),
+             ".png"))
